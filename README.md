@@ -1,10 +1,10 @@
-# 🇮🇳 Nagrik AI — Smart Bharat Civic Companion
+# Nagrik AI — Smart Bharat Civic Companion
 
 > A single smart input box that understands what a citizen needs — a question, a service, a document checklist, or a complaint — and responds with structured, actionable, multilingual guidance.
 
 Built for **Devengers PromptWars 2026** (Hack2skill × Google for Developers) — Problem Statement: *"Smart Bharat – AI-Powered Civic Companion."*
 
-**🔗 Live Demo:** [[Add your Render URL here](https://nagrikai-h83j.onrender.com/)]
+**🔗 Live Demo:** [(https://nagrikai-h83j.onrender.com/)]
 
 ---
 
