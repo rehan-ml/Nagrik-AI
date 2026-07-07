@@ -4,7 +4,7 @@
 
 Built for **Devengers PromptWars 2026** (Hack2skill × Google for Developers) — Problem Statement: *"Smart Bharat – AI-Powered Civic Companion."*
 
-**🔗 Live Demo:** [(https://nagrikai-h83j.onrender.com/)]
+**🔗 Live Demo:** https://nagrikai-h83j.onrender.com
 
 ---
 
