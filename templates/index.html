@@ -15,10 +15,11 @@
 
 <body>
 
-  <video class="bg-video" autoplay muted loop playsinline poster="{{ url_for('static', filename='res/bg.png') }}">
+  <video class="bg-video" autoplay muted loop playsinline aria-hidden="true"
+    poster="{{ url_for('static', filename='res/bg.png') }}">
     <source src="{{ url_for('static', filename='res/veo3bgvid.mp4') }}" type="video/mp4">
   </video>
-  <div class="scrim"></div>
+  <div class="scrim" aria-hidden="true"></div>
 
   <!-- ============ HEADER ============ -->
   <header class="px-6 py-4">
@@ -74,11 +75,14 @@
               data-fill="I want to report an issue: ">⚠️ Report an issue</button>
           </div>
 
+          <label for="field-citizen_message" class="sr-only">Describe your question, complaint, or request</label>
           <div class="relative">
             <textarea id="field-citizen_message" rows="4"
               placeholder="Type your question, complaint, or what you need help with…"
+              aria-label="Describe your question, complaint, or request"
               class="w-full rounded-lg px-3 py-2 pr-11 text-sm resize-none"></textarea>
-            <button type="button" id="mic-btn" title="Speak instead of typing" class="mic-btn">🎤</button>
+            <button type="button" id="mic-btn" title="Speak instead of typing" aria-label="Speak instead of typing"
+              class="mic-btn">🎤</button>
           </div>
 
           <div class="mt-3">
@@ -103,7 +107,7 @@
             </button>
           </div>
 
-          <p id="error-box" class="hidden mt-3 text-xs font-mono rounded-md p-3"
+          <p id="error-box" class="hidden mt-3 text-xs font-mono rounded-md p-3" role="alert"
             style="background:rgba(255,107,122,0.1); border:1px solid var(--error); color:#FFC2C8;"></p>
         </section>
 
@@ -113,12 +117,12 @@
 
           <div id="empty-state" class="flex flex-col items-center justify-center text-center py-10"
             style="color:var(--muted);">
-            <div class="font-mono text-4xl mb-2 float-icon brand-gradient">{ }</div>
+            <div class="font-mono text-4xl mb-2 float-icon brand-gradient" aria-hidden="true">{ }</div>
             <p class="font-display text-sm">Ask about a service, report an issue,</p>
             <p class="font-display text-sm">or request help with documents</p>
           </div>
 
-          <div id="results" class="hidden space-y-3 fade-in">
+          <div id="results" class="hidden space-y-3 fade-in" role="status" aria-live="polite">
 
             <div class="flex items-center gap-2">
               <span class="font-mono text-[10px] tracking-wider" style="color:var(--muted);">DETECTED INTENT</span>
@@ -129,7 +133,8 @@
             <div class="glass-inset card-hover rounded-xl p-4">
               <div class="flex items-center justify-between mb-2">
                 <p class="font-mono text-[10px] tracking-wider" style="color:var(--muted);">EXPLANATION</p>
-                <button type="button" id="speak-btn" title="Read aloud" class="speak-btn">🔊</button>
+                <button type="button" id="speak-btn" title="Read aloud" aria-label="Read explanation aloud"
+                  class="speak-btn">🔊</button>
               </div>
               <p id="res-explanation" class="text-sm leading-relaxed"></p>
             </div>
