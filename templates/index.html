@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nagrik AI — Devengers PromptWars 2026</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='res/style.css') }}">
+</head>
+
+<body>
+
+  <video class="bg-video" autoplay muted loop playsinline poster="{{ url_for('static', filename='res/bg.png') }}">
+    <source src="{{ url_for('static', filename='res/veo3bgvid.mp4') }}" type="video/mp4">
+  </video>
+  <div class="scrim"></div>
+
+  <!-- ============ HEADER ============ -->
+  <header class="px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="logo-mark w-9 h-9 rounded-xl flex items-center justify-center font-display text-sm font-bold"
+          style="color:#04141F;">N</div>
+        <div>
+          <h1 class="font-display font-bold text-xl leading-none brand-gradient">NAGRIK AI</h1>
+          <p class="font-mono text-[10px] leading-none mt-1.5" style="color:var(--text);">Smart Bharat · civic companion
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 font-mono text-xs px-3 py-1.5 rounded-lg glass-inset">
+        <span id="status-dot" class="w-2 h-2 rounded-full glow-dot"
+          style="background:var(--mint); color:var(--mint);"></span>
+        <span id="status-text" style="color:var(--muted);">MODEL: gemini-3.1-flash-lite · READY</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ CONSOLE ============ -->
+  <div class="console-wrap">
+    <div class="glass-box rounded-2xl p-5 h-full flex flex-col overflow-hidden">
+      <span class="hud-corner tl"></span>
+      <span class="hud-corner tr"></span>
+      <span class="hud-corner bl"></span>
+      <span class="hud-corner br"></span>
+
+      <div class="flex items-center justify-between mb-4 pb-3" style="border-bottom:1px solid rgba(79,168,255,0.2);">
+        <div class="flex items-center gap-2">
+          <span class="w-1.5 h-1.5 rounded-full glow-dot" style="background:var(--accent); color:var(--accent);"></span>
+          <span class="font-mono text-[15px] tracking-wider" style="color:var(--text);">AI CIVIC COMPANION</span>
+        </div>
+        <span id="workspace-pill" class="font-mono text-[10px] px-2 py-1 rounded glass-inset"
+          style="color:var(--text);">IDLE</span>
+      </div>
+
+      <div class="flex-1 overflow-y-auto pr-1 space-y-5">
+
+        <!-- ---- ASK SECTION ---- -->
+        <section>
+          <p class="font-mono text-[12px] mb-3 tracking-wider" style="color:var(--text);">01 — ASK NAGRIK AI</p>
+
+          <div class="flex flex-wrap gap-2 mb-3">
+            <button type="button" class="chip text-[12px] px-3 py-1.5 rounded-full font-mono" data-fill="How do I ">❓
+              Ask a question</button>
+            <button type="button" class="chip text-[12px] px-3 py-1.5 rounded-full font-mono"
+              data-fill="I'm looking for a government service or scheme for ">🏛️ Find a service</button>
+            <button type="button" class="chip text-[12px] px-3 py-1.5 rounded-full font-mono"
+              data-fill="What documents do I need for ">📄 Document help</button>
+            <button type="button" class="chip text-[12px] px-3 py-1.5 rounded-full font-mono"
+              data-fill="I want to report an issue: ">⚠️ Report an issue</button>
+          </div>
+
+          <div class="relative">
+            <textarea id="field-citizen_message" rows="4"
+              placeholder="Type your question, complaint, or what you need help with…"
+              class="w-full rounded-lg px-3 py-2 pr-11 text-sm resize-none"></textarea>
+            <button type="button" id="mic-btn" title="Speak instead of typing" class="mic-btn">🎤</button>
+          </div>
+
+          <div class="mt-3">
+            <label class="block font-mono text-[13px] mb-1.5" style="color:var(--text);">Response language</label>
+            <select id="field-response_language" class="w-full rounded-lg px-3 py-2 text-sm">
+              <option>Auto</option>
+              <option>English</option>
+              <option>Hindi</option>
+              <option>Tamil</option>
+              <option>Bengali</option>
+              <option>Marathi</option>
+              <option>Telugu</option>
+            </select>
+          </div>
+
+          <div class="mt-4 flex gap-2">
+            <button id="run-btn" class="btn-run flex-1 rounded-xl py-2.5 font-display font-semibold text-sm">
+              Ask Nagrik AI
+            </button>
+            <button id="clear-btn" class="btn-ghost rounded-xl py-2.5 px-4 font-mono text-xs">
+              clear
+            </button>
+          </div>
+
+          <p id="error-box" class="hidden mt-3 text-xs font-mono rounded-md p-3"
+            style="background:rgba(255,107,122,0.1); border:1px solid var(--error); color:#FFC2C8;"></p>
+        </section>
+
+        <!-- ---- RESPONSE SECTION ---- -->
+        <section>
+          <p class="font-mono text-[13px] mb-3 tracking-wider" style="color:var(--text);">02 — RESPONSE</p>
+
+          <div id="empty-state" class="flex flex-col items-center justify-center text-center py-10"
+            style="color:var(--muted);">
+            <div class="font-mono text-4xl mb-2 float-icon brand-gradient">{ }</div>
+            <p class="font-display text-sm">Ask about a service, report an issue,</p>
+            <p class="font-display text-sm">or request help with documents</p>
+          </div>
+
+          <div id="results" class="hidden space-y-3 fade-in">
+
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-[10px] tracking-wider" style="color:var(--muted);">DETECTED INTENT</span>
+              <span id="res-intent"
+                class="font-mono text-xs px-3 py-1 rounded-full status-pill-glow font-semibold"></span>
+            </div>
+
+            <div class="glass-inset card-hover rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <p class="font-mono text-[10px] tracking-wider" style="color:var(--muted);">EXPLANATION</p>
+                <button type="button" id="speak-btn" title="Read aloud" class="speak-btn">🔊</button>
+              </div>
+              <p id="res-explanation" class="text-sm leading-relaxed"></p>
+            </div>
+
+            <div id="res-services-wrap" class="hidden glass-inset card-hover rounded-xl p-4">
+              <p class="font-mono text-[10px] mb-3 tracking-wider" style="color:var(--muted);">RECOMMENDED SERVICES</p>
+              <div id="res-services" class="space-y-2"></div>
+            </div>
+
+            <div id="res-docs-wrap" class="hidden glass-inset card-hover rounded-xl p-4">
+              <p class="font-mono text-[10px] mb-3 tracking-wider" style="color:var(--muted);">REQUIRED DOCUMENTS</p>
+              <ul id="res-docs" class="space-y-2 text-sm"></ul>
+            </div>
+
+            <div id="res-complaint-wrap" class="hidden glass-inset card-hover rounded-xl p-4">
+              <div class="flex items-center justify-between mb-2">
+                <p class="font-mono text-[10px] tracking-wider" style="color:var(--muted);">COMPLAINT LOGGED</p>
+                <span id="res-priority"
+                  class="font-mono text-[10px] px-2 py-1 rounded-full status-pill-glow font-semibold"></span>
+              </div>
+              <p id="res-complaint-summary" class="text-sm leading-relaxed"></p>
+            </div>
+
+            <div class="glass-inset card-hover rounded-xl p-4">
+              <p class="font-mono text-[10px] mb-3 tracking-wider" style="color:var(--muted);">NEXT STEPS</p>
+              <ul id="res-next-steps" class="space-y-2 text-sm"></ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- ---- COMPLAINT TRACKER ---- -->
+        <section>
+          <div class="flex items-center justify-between mb-3">
+            <p class="font-mono text-[13px] tracking-wider" style="color:var(--text);">03 — LIVE COMPLAINT TRACKER</p>
+            <span id="complaint-count" class="font-mono text-[10px] px-2 py-1 rounded glass-inset"
+              style="color:var(--muted);">0 logged</span>
+          </div>
+          <div id="complaint-list" class="space-y-2">
+            <p id="complaint-empty" class="font-mono text-[11px]" style="color:var(--muted);">No complaints logged yet
+              this session.</p>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='res/main.js') }}"></script>
+</body>
+
+</html>
