@@ -130,7 +130,7 @@ Deployed on **Render.com** as a Docker web service:
 
 ## 👤 Author
 
-[Rehan Raza]
+Rehan Raza
 
 ---
 
